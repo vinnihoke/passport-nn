@@ -12,9 +12,9 @@ api.use(morgan());
 api.use(express.json());
 api.use(cors());
 
-api.use('/api/auth', authRouter);
+api.use('/auth', authRouter);
 
-api.get('/', (req, resizeBy) => {
+api.get('/', (req, res) => {
 	res.sendStatus(200)
 })
 
