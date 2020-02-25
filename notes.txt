@@ -1,2 +1,5 @@
 The flow is a little complicated, but straight forward. Users are clicking the google button which fires off an endpoint called /auth/google, then we're redirecting them to the oAuth provider, assuming they grant permission, they'll be redirected back to our site with a custom callback. Something like /auth/provider/cb. From there we need to check if they are a new user, we add them to the database. If not, then we need to sign them up.
 
+For Google Consent Screen
+
+Had to create an OAuth consent on Google, thene I had to enter a Zeit.co url. It wouldn't accept localhost. After that, I had to go into credentials > create credentials > OAuth client ID. From there I selected Web Application, then here was where I needed to post the authorized Localhost:3000 things.

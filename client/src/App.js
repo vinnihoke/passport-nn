@@ -12,7 +12,7 @@ const googleView = async () => {
 }
 const logoutView = async () => {
   try {
-    const response = await axios.get('http://localhost:3895/auth/logout')
+    const response = await axios.get('http://localhost:3985/auth/logout')
     console.log(response)
   } catch (e) {
     console.log(e.message)
