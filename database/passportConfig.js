@@ -3,6 +3,11 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const Auth = require('../model/auth-model.js')
 
+passport.serializeUser((user, done) => {
+	// Null would be the error. 
+	done(null, user.id)
+})
+
 passport.use(new GoogleStrategy({
 	// Options for the strategy
 	clientID: process.env.G_CLIENT_ID,
@@ -25,10 +30,12 @@ passport.use(new GoogleStrategy({
 		// This person is a current user
 		console.log(`Welcome back ${currentUser[0].firstname}!`)
 		console.log(currentUser)
+		done(null, currentUser)
 	} else {
 		// This person is a new user
 		try {
-			await Auth.add(user)
+			const newUser = await Auth.add(user)
+			done(null, newUser)
 		} catch (e) {
 			console.log("Error on line 26 passportConfig.js", e.message)
 		}
