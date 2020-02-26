@@ -1,5 +1,18 @@
+require('dotenv').config()
 const router = require('express').Router()
 const passport = require('passport')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+const generateToken = user => {
+	const payload = {
+		// This should be used for the token and the accessToken
+	};
+	const options = {
+		expiresIn: '1h'
+	}
+	return jwt.sign(payload, process.env.JWT_SECRET, options)
+}
 
 router.get('/google', passport.authenticate('google', {
 	scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar']
