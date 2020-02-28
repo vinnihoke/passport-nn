@@ -8,6 +8,17 @@ passport.serializeUser((user, done) => {
 	done(null, user.id)
 })
 
+passport.deserializeUser(async (id, done) => {
+	// Null would be the error. 
+	try {
+		const user = await Auth.findById(id)
+		console.log(user)
+		done(null, user.id)
+	} catch (e) {
+		console.log("passportConfig.js line 15", e.message)
+	}
+})
+
 passport.use(new GoogleStrategy({
 	// Options for the strategy
 	clientID: process.env.G_CLIENT_ID,
@@ -28,16 +39,17 @@ passport.use(new GoogleStrategy({
 	let currentUser = await Auth.findBy({ auth_id: scopes.id })
 	if (currentUser) {
 		// This person is a current user
-		console.log(`Welcome back ${currentUser[0].firstname}!`)
+		console.log(`Welcome back ${currentUser.firstname}!`)
 		console.log(currentUser)
 		done(null, currentUser)
 	} else {
 		// This person is a new user
 		try {
 			const newUser = await Auth.add(user)
+			console.log(newUser)
 			done(null, newUser)
 		} catch (e) {
-			console.log("Error on line 26 passportConfig.js", e.message)
+			console.log("Error on line 51 passportConfig.js", e.message)
 		}
 	}
 })
